@@ -1,3 +1,4 @@
+<%@page import="com.model.MemberVO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.model.ReplyVO"%>
 <%@page import="com.model.BoardVO"%>
@@ -42,6 +43,8 @@ p {
 		
 		ArrayList<ReplyVO> al = dao.getReply(num);
 		System.out.println(al.size());
+		
+		MemberVO vo2 = (MemberVO)session.getAttribute("member");
 	%>
 	<div class="card-body" style="margin-top: 100px; margin-bottom: 10px; height: 50px">
 		<p><%=vo.getName() %> / <%=vo.getWriter() %></p>
@@ -95,6 +98,18 @@ p {
                      console.log(xhr.responseText) //응답데이터 확인 (responseXML)
                      if(xhr.responseText === "success"){
                         //location.href = "board_list.jsp"
+                        let li = document.createElement("li");
+                        li.className = "list-group-item";
+                        let span = document.createElement("span");
+                        span.innerText = ta.value+" / <%= vo2.getId()%>";
+                        
+                        li.appendChild(span); //li태그 자식요소로 span태그 추가
+                        
+                        replyDiv.insertBefore(li, replyDiv.firstChild);
+                        
+                        //textarea 댓글창 비우기
+                        ta.value="";
+                        
                      }else{
                         //check_p.innerText = '아이디/비밀번호를 확인해주세요'
                      }
