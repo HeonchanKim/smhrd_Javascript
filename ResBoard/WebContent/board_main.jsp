@@ -45,6 +45,12 @@ p {
 		System.out.println(al.size());
 		
 		MemberVO vo2 = (MemberVO)session.getAttribute("member");
+		
+		if(!vo.getWriter().equals(vo2.getId())){
+			dao.updateViews(num);			
+		}
+		//조회수 1증가
+		
 	%>
 	<div class="card-body" style="margin-top: 100px; margin-bottom: 10px; height: 50px">
 		<p><%=vo.getName() %> / <%=vo.getWriter() %></p>

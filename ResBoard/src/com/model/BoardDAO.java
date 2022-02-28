@@ -52,6 +52,7 @@ public class BoardDAO {
 		}
 		return al;
 	}// end of getList
+	
 	public BoardVO getOneList(int num) {
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -96,6 +97,7 @@ public class BoardDAO {
 		}
 		return vo;
 	}// end of getOneList
+	
 	public ArrayList<ReplyVO> getReply(int num) {
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -138,5 +140,35 @@ public class BoardDAO {
 		}
 		return al;
 	}// end of 
+	
+	public void updateViews(int num) {
+		Connection conn = null;
+	    PreparedStatement psmt = null;
+	      
+	    try {
+	       Class.forName("oracle.jdbc.driver.OracleDriver");
+	       String url = "jdbc:oracle:thin:@127.0.0.1:1521:xe";
+	       String dbid = "hr";
+	       String dbpw = "hr";
+	       
+	       conn = DriverManager.getConnection(url, dbid, dbpw);
+	       
+	       String sql = "update board set views = views+1 where num = ?";
+	       psmt = conn.prepareStatement(sql);
+	       psmt.setInt(1, num);
+	       
+	       psmt.executeUpdate();
+	       
+	    }catch(Exception e) {
+	       e.printStackTrace();
+	    }finally {
+	    	try{
+	           psmt.close();
+	           conn.close();
+	        }catch (Exception e2) {
+	           e2.printStackTrace();
+	        }
+	    }
+	}//end of updateViews()
 	
 }// end of class
